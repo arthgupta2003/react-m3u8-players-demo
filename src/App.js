@@ -1,25 +1,34 @@
-import logo from './logo.svg';
+import React from 'react';
+import { useState } from 'react';
+import VideoPlayer from './videoplayer';
 import './App.css';
+import './videoplayer.css'
 
-function App() {
+function App () {
+    return (
+      <div>
+        {Form()}
+      </div>
+            ); 
+          } 
+export default App;
+
+
+export function Form() {
+  const [urlInput, setUrl] = useState('');
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <h1 className='App-header'> Enter URL of MPEG-DASH or HLS media asset: </h1>
+      <label className='App-header'>
+        <input
+          onChange={e => setUrl(e.target.value)}
+          
+        />
+      </label>
+      <div className='App-header'>
+      <VideoPlayer source = {urlInput} key= {urlInput}/>
+      </div>
+      
+    </>
   );
 }
-
-export default App;
