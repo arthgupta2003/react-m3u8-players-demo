@@ -79,7 +79,7 @@ class VideoPlayer extends React.PureComponent{
 					width = '100%'
 					ref={this.videoComponent}
 					poster="//shaka-player-demo.appspot.com/assets/poster.jpg"
-					controls autoplay
+					controls autoPlay
 				/>
 			</div>
 		);
