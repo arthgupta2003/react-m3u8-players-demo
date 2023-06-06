@@ -6,6 +6,7 @@ import "video.js/dist/video-js.css";
 import { useVideoJS } from "react-hook-videojs";
 import ReactHlsPlayer from 'react-hls-player';
 import MediaElement from './MediaElement';
+import ClapprComponent from './ClapprComponent';
 
 
 function App () {
@@ -31,7 +32,8 @@ function App () {
                 options={JSON.stringify(config)}
                 tracks={JSON.stringify(tracks)}
                 controls
-            />
+            />,
+      "clappr": <ClapprComponent source={urlInput}/>
   };
   return (
     <>
@@ -41,6 +43,7 @@ function App () {
         <button onClick={()=>setPlayer("hlsJS")}>hlsJS </button>
         <button onClick={()=>setPlayer("videoJS")} > videoJS</button>
         <button onClick={()=>setPlayer("mediaElement")} > mediaElement</button>
+        <button onClick={()=>setPlayer("clappr")} > clappr</button>
       </label>
       <div className='App-header'>
       {allPlayerDict[currentPlayer]}
