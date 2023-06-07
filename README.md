@@ -9,8 +9,8 @@ This is a React application that demonstrates the usage of different M3U8 player
 1. Clone the repository or download the source code.
 2. Install the dependencies by running the following command in the project directory:
 
-    1. `npm install` 
-    2. `npm i react-scripts@latest`
+    1. `npm install --force` 
+    2. `npm i react-scripts@latest --force`
     3. `npm start`
 
 ## Available Players
