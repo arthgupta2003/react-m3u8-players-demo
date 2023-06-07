@@ -7,10 +7,11 @@ import { useVideoJS } from "react-hook-videojs";
 import ReactHlsPlayer from 'react-hls-player';
 import MediaElement from './MediaElement';
 import ClapprComponent from './ClapprComponent';
+import Flowplayer, { useFlowplayer } from "@flowplayer/react-flowplayer"
 
 
 function App () {
-  const [urlInput, setUrl] = useState('');
+  const [urlInput, setUrl] = useState('/Users/arthgupta/Documents/ReactJSX/shakatest/public/1ad47cd982b74a718b21d4e10e89e9bd.m3u8');
   const [currentPlayer, setPlayer] = useState('hlsJS');
   const { Video, player, ready } = useVideoJS(
     { sources: [{ src: urlInput ,type:'application/x-mpegURL'}] }
@@ -21,19 +22,19 @@ function App () {
     "videoJS": <VideoJSPlayer controls autoPlay height='500' volume='1' muted/>,
     "hlsJS": <ReactHlsPlayer src={urlInput} autoPlay={true} controls={true} width="50%" height="auto" />,
     "mediaElement": <MediaElement
-                id="player1"
-                mediaType="video"
-                autoPlay= {true}
-                preload="none"
-                width="600"
-                height="360"
-                poster=""
-                sources={JSON.stringify(sources)}
-                options={JSON.stringify(config)}
-                tracks={JSON.stringify(tracks)}
-                controls
-            />,
-      "clappr": <ClapprComponent source={urlInput}/>
+                          id="player1"
+                          mediaType="video"
+                          autoPlay= {true}
+                          preload="none"
+                          width="600"
+                          height="360"
+                          poster=""
+                          sources={JSON.stringify(sources)}
+                          options={JSON.stringify(config)}
+                          tracks={JSON.stringify(tracks)}
+                          controls
+                      />,
+      "clappr": <ClapprComponent source={urlInput}/>,
   };
   return (
     <>
