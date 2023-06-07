@@ -1,5 +1,14 @@
 body {
-  background-color: #282c34;
+  background-color: #7b869a;
+  color: white;
+  align-items: center;
+}
+.header {
+  padding: 10px;
+  text-align: center;
+  background: #9a92ee76;
+  color: white;
+  font-size: 20px;
 }
 
 .App {

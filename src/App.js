@@ -1,21 +1,34 @@
 import React from 'react';
 import { useState } from 'react';
 import './App.css';
+import { TextField, Button, Menu, MenuItem } from '@material-ui/core';
 
 import "video.js/dist/video-js.css";
 import { useVideoJS } from "react-hook-videojs";
 import ReactHlsPlayer from 'react-hls-player';
 import MediaElement from './MediaElement';
 import ClapprComponent from './ClapprComponent';
-import Flowplayer, { useFlowplayer } from "@flowplayer/react-flowplayer"
 
 
 function App () {
-  const [urlInput, setUrl] = useState('/Users/arthgupta/Documents/ReactJSX/shakatest/public/1ad47cd982b74a718b21d4e10e89e9bd.m3u8');
+  const [urlInput, setUrl] = useState('');
   const [currentPlayer, setPlayer] = useState('hlsJS');
+  const [anchorEl, setAnchorEl] = useState(null);
   const { Video, player, ready } = useVideoJS(
     { sources: [{ src: urlInput ,type:'application/x-mpegURL'}] }
   );
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handlePlayerSelect = (player) => {
+    setPlayer(player);
+    handleClose();
+  };
   const VideoJSPlayer = Video
   const sources = [{src: urlInput, type: 'application/x-mpegURL'}], config = {}, tracks = {}
   var allPlayerDict = {
@@ -38,15 +51,38 @@ function App () {
   };
   return (
     <>
-    <h1 className='App-header'> Enter URL of m3u8 asset: </h1>
-      <label className='App-header'>
-        <input size="50" onChange={e => setUrl(e.target.value)} />
-        <button onClick={()=>setPlayer("hlsJS")}>hlsJS </button>
-        <button onClick={()=>setPlayer("videoJS")} > videoJS</button>
-        <button onClick={()=>setPlayer("mediaElement")} > mediaElement</button>
-        <button onClick={()=>setPlayer("clappr")} > clappr</button>
-      </label>
-      <div className='App-header'>
+    <div class="header">
+  <h1>react-m3u8-players-demo</h1>
+    </div>
+    <p align="center">
+      <TextField
+        variant="filled"
+        size= "small"
+        onChange={(e) => setUrl(e.target.value)}
+        style={{ backgroundColor: 'white', width: '50%',borderRadius: '5px' }}
+        label= 'Enter URL of m3u8 asset:'
+      />
+      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+      <Button onClick={handleClick} variant="contained">
+        Select Player
+      </Button>
+    </p>
+    
+
+      
+
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={() => handlePlayerSelect("hlsJS")}>hlsJS</MenuItem>
+        <MenuItem onClick={() => handlePlayerSelect("videoJS")}>videoJS</MenuItem>
+        <MenuItem onClick={() => handlePlayerSelect("mediaElement")}>mediaElement</MenuItem>
+        <MenuItem onClick={() => handlePlayerSelect("clappr")}>clappr</MenuItem>
+      </Menu>
+
+      <div align="center">
       {allPlayerDict[currentPlayer]}
       <p>Currently using {currentPlayer} player</p>
       </div>
