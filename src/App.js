@@ -52,7 +52,7 @@ function App () {
   return (
     <>
     <div class="header">
-  <h1>react-m3u8-players-demo</h1>
+      <h2>Test your HLS VODs and Livestreams with VideoJS, hlsJS, MediaElement, Clappr</h2>
     </div>
     <p align="center">
       <TextField
@@ -60,17 +60,13 @@ function App () {
         size= "small"
         onChange={(e) => setUrl(e.target.value)}
         style={{ backgroundColor: 'white', width: '50%',borderRadius: '5px' }}
-        label= 'Enter URL of m3u8 asset:'
+        label= 'Enter URL of m3u8 file'
       />
       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
       <Button onClick={handleClick} variant="contained">
         Select Player
       </Button>
     </p>
-    
-
-      
-
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
