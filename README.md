@@ -1,7 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 # React M3U8 Players Demo
-
+Live URL: https://react-m3u8-players-demo-jdxtr1re8-arthgupta2003.vercel.app 
 This is a React application that demonstrates the usage of different M3U8 players for playing HLS (HTTP Live Streaming) videos. The application allows you to enter the URL of an M3U8 asset and select a player to play the video.
 
 ## Installation
@@ -9,8 +9,8 @@ This is a React application that demonstrates the usage of different M3U8 player
 1. Clone the repository or download the source code.
 2. Install the dependencies by running the following command in the project directory:
 
-    1. `npm install --force` 
-    2. `npm i react-scripts@latest --force`
+    1. `npm install --legacy-peer-deps` 
+    2. `npm i react-scripts@latest --legacy-peer-deps`
     3. `npm start`
 
 ## Available Players
