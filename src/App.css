@@ -4,9 +4,10 @@ body {
   align-items: center;
 }
 .header {
+  background-image: linear-gradient(to right, #6F2C89 , #E92079);
   padding: 5px;
   text-align: center;
-  background: #4b9ad7;
+  /* background: #4b9ad7; */
   color: white;
   font-size: 20px;
 }

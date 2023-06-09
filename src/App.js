@@ -1,7 +1,12 @@
 import React from 'react';
 import { useState } from 'react';
 import './App.css';
-import { TextField, Button, Menu, MenuItem } from '@material-ui/core';
+import {TextField} from '@material-ui/core';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import "video.js/dist/video-js.css";
 import { useVideoJS } from "react-hook-videojs";
@@ -17,17 +22,9 @@ function App () {
   const { Video, player, ready } = useVideoJS(
     { sources: [{ src: urlInput ,type:'application/x-mpegURL'}] }
   );
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handlePlayerSelect = (player) => {
-    setPlayer(player);
-    handleClose();
+  const handlePlayerSelect = (event) => {
+    setPlayer(event.target.value);
   };
   const VideoJSPlayer = Video
   const sources = [{src: urlInput, type: 'application/x-mpegURL'}], config = {}, tracks = {}
@@ -59,28 +56,29 @@ function App () {
         variant="filled"
         size= "small"
         onChange={(e) => setUrl(e.target.value)}
-        style={{ backgroundColor: 'white', width: '50%',borderRadius: '5px' }}
+        style={{ backgroundColor: 'white', width: '50%' , height:"45px"}}
         label= 'Enter URL of m3u8 file'
       />
-      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-      <Button onClick={handleClick} variant="contained">
-        Select Player
-      </Button>
+      <Box sx={{  display: 'inline-flex',width:"15%" ,color: 'white', bgcolor: '#CC237D', height: '45px' }}>
+      <FormControl fullWidth>
+        <Select
+          labelId="select-label"
+          value={currentPlayer}
+          label="Player"
+          onChange={handlePlayerSelect}
+          sx={{"color": "white", "font-weight":"bold"}}
+           
+        >
+          <MenuItem value={'videoJS'}> Using videoJS</MenuItem>
+          <MenuItem value={'hlsJS'}> Using hlsJS</MenuItem>
+          <MenuItem value={'mediaElement'}>Using mediaElement</MenuItem>
+          <MenuItem value={'clappr'}>Using clappr</MenuItem>
+        </Select>
+      </FormControl>
+    </Box>
     </p>
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <MenuItem onClick={() => handlePlayerSelect("hlsJS")}>hlsJS</MenuItem>
-        <MenuItem onClick={() => handlePlayerSelect("videoJS")}>videoJS</MenuItem>
-        <MenuItem onClick={() => handlePlayerSelect("mediaElement")}>mediaElement</MenuItem>
-        <MenuItem onClick={() => handlePlayerSelect("clappr")}>clappr</MenuItem>
-      </Menu>
-
       <div align="center">
-      {allPlayerDict[currentPlayer]}
-      <p>Currently using {currentPlayer} player</p>
+      {urlInput !="" &&  allPlayerDict[currentPlayer]}
       </div>
       
     </>
