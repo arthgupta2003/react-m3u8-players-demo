@@ -59,14 +59,14 @@ function App () {
         style={{ backgroundColor: 'white', width: '50%' , height:"45px"}}
         label= 'Enter URL of m3u8 file'
       />
-      <Box sx={{  display: 'inline-flex',width:"15%" ,color: 'white', bgcolor: '#CC237D', height: '45px' }}>
-      <FormControl fullWidth>
+      <Box sx={{ display: 'inline-flex',width:"15%" ,color: 'white', bgcolor: '#CC237D', height: '45px'}}>
+      <FormControl fullWidth >
         <Select
           labelId="select-label"
           value={currentPlayer}
           label="Player"
           onChange={handlePlayerSelect}
-          sx={{"color": "white", "font-weight":"bold"}}
+          sx={{"color": "white", "fontWeight":"bold", 'border': '0', 'boxShadow': 'none'}}
            
         >
           <MenuItem value={'videoJS'}> Using videoJS</MenuItem>

@@ -3,6 +3,12 @@ body {
   color: white;
   align-items: center;
 }
+
+fieldset{
+  border: none !important;
+  outline: none !important;
+}
+
 .header {
   background-image: linear-gradient(to right, #6F2C89 , #E92079);
   padding: 5px;
