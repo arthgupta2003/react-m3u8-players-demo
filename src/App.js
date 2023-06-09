@@ -17,7 +17,7 @@ import ClapprComponent from './ClapprComponent';
 
 function App () {
   const [urlInput, setUrl] = useState('');
-  const [currentPlayer, setPlayer] = useState('hlsJS');
+  const [currentPlayer, setPlayer] = useState('videoJS');
   const [anchorEl, setAnchorEl] = useState(null);
   const { Video, player, ready } = useVideoJS(
     { sources: [{ src: urlInput ,type:'application/x-mpegURL'}] }
@@ -32,23 +32,22 @@ function App () {
     "videoJS": <VideoJSPlayer controls autoPlay height='500' volume='1' muted/>,
     "hlsJS": <ReactHlsPlayer src={urlInput} autoPlay={true} controls={true} width="50%" height="auto" />,
     "mediaElement": <MediaElement
-                          id="player1"
-                          mediaType="video"
-                          autoPlay= {true}
-                          preload="none"
-                          width="600"
-                          height="360"
-                          poster=""
-                          sources={JSON.stringify(sources)}
-                          options={JSON.stringify(config)}
-                          tracks={JSON.stringify(tracks)}
-                          controls
+                    id="player1"
+                    mediaType="video"
+                    preload="none"
+                    controls
+                    width="640"
+                    height="360"
+                    poster=""
+                    sources={JSON.stringify(sources)}
+                    options={JSON.stringify(config)}
+                    tracks={JSON.stringify(tracks)}
                       />,
       "clappr": <ClapprComponent source={urlInput}/>,
   };
   return (
     <>
-    <div class="header">
+    <div className="header">
       <h2>Test your HLS VODs and Livestreams with VideoJS, hlsJS, MediaElement, Clappr</h2>
     </div>
     <p align="center">

@@ -8,9 +8,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <div>
 <script src="https://github.com/videojs/mux.js/releases/latest/download/mux.js"></script>
-  <React.StrictMode>
     <App />
-  </React.StrictMode>
+  
   </div>
   
 );
