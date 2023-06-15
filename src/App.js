@@ -16,6 +16,7 @@ import MediaElement from './MediaElement';
 import ClapprComponent from './ClapprComponent';
 import SimpleShaka from './SimpleShaka';
 import PlyrPlayer from './PlyrPlayer';
+import DPlayer from "react-dplayer";
 
 
 function App() {
@@ -33,7 +34,7 @@ function App() {
   const sources = [{ src: urlInput, type: 'application/x-mpegURL' }], config = {}, tracks = {}
   var allPlayerDict = {
     "videoJS": <VideoJSPlayer controls autoPlay height='500' volume='1' muted key={urlInput} />,
-    "hlsJS": <ReactHlsPlayer src={urlInput} autoPlay={true} controls={true} width="50%" height="auto" key={urlInput} />,
+    "hlsJS": <ReactHlsPlayer src={urlInput} autoPlay={true} controls={true} width='100%' key={urlInput} />,
     "mediaElement": <MediaElement
       id="player1"
       mediaType="video"
@@ -50,10 +51,11 @@ function App() {
     "clappr": <ClapprComponent source={urlInput} key={urlInput} />,
     'shaka': <SimpleShaka src={urlInput} key={urlInput}></SimpleShaka>,
     'plyr': <PlyrPlayer src={urlInput} key={urlInput}></PlyrPlayer>,
+    'dplayer': <DPlayer options={{video:{url: urlInput, height:"100px"}}} />,
     '': <></>
   };
   return (
-    <>
+    <div>
       <Helmet>
         <script src="https://cdn.rawgit.com/video-dev/hls.js/18bb552/dist/hls.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mux.js/5.10.0/mux.min.js"></script>
@@ -78,6 +80,7 @@ function App() {
               <MenuItem value={'clappr'}>Using clappr</MenuItem>
               <MenuItem value={'shaka'}>Using shaka</MenuItem>
               <MenuItem value={'plyr'}>Using plyr</MenuItem>
+              <MenuItem value={'dplayer'}>Using dplayer</MenuItem>
             </Select>
           </FormControl>
           <TextField
@@ -106,12 +109,14 @@ function App() {
           </Button>
         </Box>
       </p>
-      <div align="center">
-        {urlInput != "" && allPlayerDict[currentPlayer]}
-        {urlInput == "" && <p sx={{"fontWeight": "bold","color": "white"}}> Enter Valid URL</p> }
-      </div>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+  <div className="VideoContainer" style={{ width: '50%', height: 'auto' }}>
+    {urlInput !== "" && allPlayerDict[currentPlayer]}
+    {urlInput === "" && <p sx={{"fontWeight": "bold", "color": "white"}}>Enter Valid URL</p>}
+  </div>
+</div>
 
-    </>
+    </div>
   );
 }
 export default App;

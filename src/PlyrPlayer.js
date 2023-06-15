@@ -8,42 +8,54 @@ const videoOptions = {
   speed: {
     selected: 1,
     options: [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.5, 4]
-  }
+  },
+  width:"300px",
+  height:"auto"
 };
 
 export default class PlyrPlayer extends Component {
   constructor(props) {
     super(props);
     this.ref = React.createRef();
-    this.src= props.src
+    this.src = props.src;
+    this.hls = null;
   }
 
   componentDidMount() {
     this.loadVideo();
   }
 
+  componentWillUnmount() {
+    if (this.hls) {
+      this.hls.destroy();
+    }
+  }
+
   loadVideo = async () => {
     const video = document.getElementById('plyr');
-    const hls = new Hls();
-    hls.loadSource(this.src);
-    hls.attachMedia(video);
+    this.hls = new Hls();
+    this.hls.loadSource(this.src);
+    this.hls.attachMedia(video);
 
     this.ref.current.plyr.media = video;
 
-    hls.on(Hls.Events.MANIFEST_PARSED, () => {
+    this.hls.on(Hls.Events.MANIFEST_PARSED, () => {
       this.ref.current.plyr.play();
     });
   };
 
   render() {
     return (
-      <Plyr
+      <div>
+        <Plyr
         id="plyr"
         options={videoOptions}
         source={{}}
         ref={this.ref}
         controls={false}
       />
+      </div>
+      
     );
   }
 }
