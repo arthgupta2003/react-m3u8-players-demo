@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 import './App.css';
 import { TextField } from '@material-ui/core';
 import Box from '@mui/material/Box';
@@ -51,7 +51,7 @@ function App() {
     "clappr": <ClapprComponent source={urlInput} key={urlInput} />,
     'shaka': <SimpleShaka src={urlInput} key={urlInput}></SimpleShaka>,
     'plyr': <PlyrPlayer src={urlInput} key={urlInput}></PlyrPlayer>,
-    'dplayer': <DPlayer options={{video:{url: urlInput, height:"100px"}}} />,
+    'dplayer': <DPlayer options={{ video: { url: urlInput, height: "100px" } }} />,
     '': <></>
   };
   return (
@@ -110,11 +110,10 @@ function App() {
         </Box>
       </p>
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-  <div className="VideoContainer" style={{ width: '50%', height: 'auto' }}>
-    {urlInput !== "" && allPlayerDict[currentPlayer]}
-    {urlInput === "" && <p sx={{"fontWeight": "bold", "color": "white"}}>Enter Valid URL</p>}
-  </div>
-</div>
+        <div className="VideoContainer" style={{ width: '50%', height: 'auto' }}>
+          {urlInput !== "" && allPlayerDict[currentPlayer]}
+        </div>
+      </div>
 
     </div>
   );
