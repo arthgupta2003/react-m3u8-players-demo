@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import {Helmet} from "react-helmet";
 import './App.css';
 import { TextField } from '@material-ui/core';
 import Box from '@mui/material/Box';
@@ -13,11 +14,13 @@ import { useVideoJS } from "react-hook-videojs";
 import ReactHlsPlayer from 'react-hls-player';
 import MediaElement from './MediaElement';
 import ClapprComponent from './ClapprComponent';
+import SimpleShaka from './SimpleShaka';
+import PlyrPlayer from './PlyrPlayer';
 
 
 function App() {
   const [urlInput, setUrl] = useState('');
-  const [currentPlayer, setPlayer] = useState('videoJS');
+  const [currentPlayer, setPlayer] = useState('hlsJS');
   const [anchorEl, setAnchorEl] = useState(null);
   const { Video, player, ready } = useVideoJS(
     { sources: [{ src: urlInput, type: 'application/x-mpegURL' }] }
@@ -26,11 +29,11 @@ function App() {
   const handlePlayerSelect = (event) => {
     setPlayer(event.target.value);
   };
-  const VideoJSPlayer = Video
+  const VideoJSPlayer = Video;
   const sources = [{ src: urlInput, type: 'application/x-mpegURL' }], config = {}, tracks = {}
   var allPlayerDict = {
-    "videoJS": <VideoJSPlayer controls autoPlay height='500' volume='1' muted />,
-    "hlsJS": <ReactHlsPlayer src={urlInput} autoPlay={true} controls={true} width="50%" height="auto" />,
+    "videoJS": <VideoJSPlayer controls autoPlay height='500' volume='1' muted key={urlInput} />,
+    "hlsJS": <ReactHlsPlayer src={urlInput} autoPlay={true} controls={true} width="50%" height="auto" key={urlInput} />,
     "mediaElement": <MediaElement
       id="player1"
       mediaType="video"
@@ -42,17 +45,25 @@ function App() {
       sources={JSON.stringify(sources)}
       options={JSON.stringify(config)}
       tracks={JSON.stringify(tracks)}
+      key={urlInput}
     />,
-    "clappr": <ClapprComponent source={urlInput} />,
+    "clappr": <ClapprComponent source={urlInput} key={urlInput} />,
+    'shaka': <SimpleShaka src={urlInput} key={urlInput}></SimpleShaka>,
+    'plyr': <PlyrPlayer src={urlInput} key={urlInput}></PlyrPlayer>,
+    '': <></>
   };
   return (
     <>
+      <Helmet>
+        <script src="https://cdn.rawgit.com/video-dev/hls.js/18bb552/dist/hls.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mux.js/5.10.0/mux.min.js"></script>
+      </Helmet>
       <div className="header">
         <h2>Test your HLS VODs and Livestreams with VideoJS, hlsJS, MediaElement, Clappr</h2>
       </div>
       <p align="center">
         <Box sx={{ display: 'inline-flex', width: "80%", color: 'white', bgcolor: '#C2267E', height: '45px' }}>
-          <FormControl sx={{'width':"15%"}} >
+          <FormControl sx={{ 'width': "15%" }} >
             <Select
               labelId="select-label"
               value={currentPlayer}
@@ -61,10 +72,12 @@ function App() {
               sx={{ "color": "white", "fontWeight": "bold", 'border': '0', 'boxShadow': 'none' }}
 
             >
-              <MenuItem value={'videoJS'}> Using videoJS</MenuItem>
               <MenuItem value={'hlsJS'}> Using hlsJS</MenuItem>
+              <MenuItem value={'videoJS'}> Using videoJS</MenuItem>
               <MenuItem value={'mediaElement'}>Using mediaElement</MenuItem>
               <MenuItem value={'clappr'}>Using clappr</MenuItem>
+              <MenuItem value={'shaka'}>Using shaka</MenuItem>
+              <MenuItem value={'plyr'}>Using plyr</MenuItem>
             </Select>
           </FormControl>
           <TextField
@@ -74,15 +87,28 @@ function App() {
             style={{ backgroundColor: 'white', width: '70%', height: "45px" }}
             label='Enter URL of m3u8 file'
           />
-          <Button 
-          onClick={()=> {var temp = urlInput; setUrl(""); setUrl(temp)} } 
-          sx={{ 'width': '15%', "color": "white", "fontWeight": "bold", 'border': '0', 'boxShadow': 'none' }}>
+          <Button
+            onClick={() => {
+              const tempURL = urlInput;
+              const tempPlayer = currentPlayer;
+
+              setPlayer('');
+              setUrl('');
+
+              setTimeout(() => {
+                setPlayer(tempPlayer);
+                setUrl(tempURL);
+                console.log('Refresh');
+              }, 100); // Delay of 100 milliseconds to force update
+            }}
+            sx={{ 'width': '15%', "color": "white", "fontWeight": "bold", 'border': '0', 'boxShadow': 'none' }}>
             Refresh Stream
           </Button>
         </Box>
       </p>
       <div align="center">
         {urlInput != "" && allPlayerDict[currentPlayer]}
+        {urlInput == "" && <p sx={{"fontWeight": "bold","color": "white"}}> Enter Valid URL</p> }
       </div>
 
     </>
