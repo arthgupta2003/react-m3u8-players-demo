@@ -1,5 +1,5 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-#### Live URL: https://react-m3u8-players-demo-jdxtr1re8-arthgupta2003.vercel.app
+#### Live URL: https://react-m3u8-players-demo.vercel.app/
 # React M3U8 Players Demo 
 This is a React application that demonstrates the usage of different M3U8 players for playing HLS (HTTP Live Streaming) videos. The application allows you to enter the URL of an M3U8 asset and select a player to play the video.
 
