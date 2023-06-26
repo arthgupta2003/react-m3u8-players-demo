@@ -22,7 +22,7 @@ import DPlayer from "react-dplayer";
 function App() {
   const [urlInput, setUrl] = useState('');
   const [currentPlayer, setPlayer] = useState('hlsJS');
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [numberOfUrlUpdates, modifyNumberOfUrlUpdates] = useState(0);
   const { Video, player, ready } = useVideoJS(
     { sources: [{ src: urlInput, type: 'application/x-mpegURL' }] }
   );
@@ -33,8 +33,8 @@ function App() {
   const VideoJSPlayer = Video;
   const sources = [{ src: urlInput, type: 'application/x-mpegURL' }], config = {}, tracks = {}
   var allPlayerDict = {
-    "videoJS": <VideoJSPlayer controls autoPlay height='500' volume='1' muted key={urlInput} />,
-    "hlsJS": <ReactHlsPlayer src={urlInput} autoPlay={true} controls={true} width='100%' key={urlInput} />,
+    "videoJS": <VideoJSPlayer controls autoPlay height='500' volume='1' muted key={numberOfUrlUpdates} />,
+    "hlsJS": <ReactHlsPlayer src={urlInput} autoPlay={true} controls={true} width='100%' key={numberOfUrlUpdates} />,
     "mediaElement": <MediaElement
       id="player1"
       mediaType="video"
@@ -46,12 +46,12 @@ function App() {
       sources={JSON.stringify(sources)}
       options={JSON.stringify(config)}
       tracks={JSON.stringify(tracks)}
-      key={urlInput}
+      key={numberOfUrlUpdates}
     />,
-    "clappr": <ClapprComponent source={urlInput} key={urlInput} />,
-    'shaka': <SimpleShaka src={urlInput} key={urlInput}></SimpleShaka>,
-    'plyr': <PlyrPlayer src={urlInput} key={urlInput}></PlyrPlayer>,
-    'dplayer': <DPlayer options={{ video: { url: urlInput, height: "100px" } }} />,
+    "clappr": <ClapprComponent source={urlInput} key={numberOfUrlUpdates} />,
+    'shaka': <SimpleShaka src={urlInput} key={numberOfUrlUpdates}></SimpleShaka>,
+    'plyr': <PlyrPlayer src={urlInput} key={numberOfUrlUpdates}></PlyrPlayer>,
+    'dplayer': <DPlayer key={numberOfUrlUpdates} options={{ video: { url: urlInput, height: "100px" } }} />,
     '': <></>
   };
   return (
@@ -86,7 +86,7 @@ function App() {
           <TextField
             variant="filled"
             size="small"
-            onChange={(e) => setUrl(e.target.value)}
+            onChange={(e) => {setUrl(e.target.value); modifyNumberOfUrlUpdates(numberOfUrlUpdates+1)} }
             style={{ backgroundColor: 'white', width: '70%', height: "45px" }}
             label='Enter URL of m3u8 file'
           />
@@ -99,6 +99,7 @@ function App() {
               setUrl('');
 
               setTimeout(() => {
+                modifyNumberOfUrlUpdates(numberOfUrlUpdates+1);
                 setPlayer(tempPlayer);
                 setUrl(tempURL);
                 console.log('Refresh');
